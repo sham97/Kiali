@@ -1,4 +1,3 @@
-# Source: kiali-server/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -80,7 +79,33 @@ data:
         url: http://prometheus-server.monitoring.svc.cluster.local:80/
       
       grafana:
-        url: http://grafana1.monitoring.svc.cluster.local:80/
+        auth:
+          ca_file: ""
+          insecure_skip_verify: false
+          password: "######"
+          token: ""
+          type: "basic"
+          use_kiali_token: false
+          username: "#####"
+        dashboards:
+        - name: "Istio Service Dashboard"
+          variables:
+            namespace: "var-namespace"
+            service: "var-service"
+        - name: "Istio Workload Dashboard"
+          variables:
+            namespace: "var-namespace"
+            workload: "var-workload"
+        - name: "Istio Mesh Dashboard"
+        - name: "Istio Control Plane Dashboard"
+        - name: "Istio Performance Dashboard"
+        - name: "Istio Wasm Extension Dashboard"
+        enabled: true
+        health_check_url: ""
+        # default: in_cluster_url is undefined
+        in_cluster_url: "http://grafana1.monitoring.svc.cluster.local:80/"
+        is_core: false
+        url: "http://grafana1.monitoring.svc.cluster.local:80/"
         
       tracing:
         auth:
